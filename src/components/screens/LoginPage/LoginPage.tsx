@@ -13,6 +13,5 @@ export const LoginPage: FC<ILoginPageProps> = ({ className, style }) => {
 	const [page, setPage] = useState<Pages>('login')
 
 	return <div className={cn(className, styles.block)} style={style}>
-
   </div>
 }

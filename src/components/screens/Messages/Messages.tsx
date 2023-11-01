@@ -1,15 +1,17 @@
 import { CSSProperties, FC } from 'react'
-import styles from './Header.module.scss'
+import styles from './Messages.module.scss'
 import cn from 'classnames'
 
-export interface IHeaderProps {
+export interface IMessagesProps {
 className?: string
 style?: CSSProperties
+
 }
 
-export const Header: FC<IHeaderProps> = ({className, style}) => {
+export const Messages: FC<IMessagesProps> = ({className, style}) => {
   return (
     <div className={cn(className, styles.block)} style={style}>
+      
     </div>
   );
 }

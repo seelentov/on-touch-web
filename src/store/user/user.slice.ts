@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-	token: null,
-	id: null,
+	token: '',
+	id: '',
 }
 
 export const userSlice = createSlice({
@@ -14,8 +14,8 @@ export const userSlice = createSlice({
 			state.id = inputs.id
 		},
 		logout: state => {
-			state.token = null
-			state.id = null
+			state.token = ''
+			state.id = ''
 		},
 	},
 })

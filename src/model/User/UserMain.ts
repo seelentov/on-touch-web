@@ -2,26 +2,26 @@ export class UserMain {
   private id: string
   private name: string
   private img: string
-  private birth: number
+  private birth: Date
   private email: string
   private nickname: string
-  private bio: string
+  private bio: string | ''
 
   constructor(dt: UserMain){
-  this.id = dt.id
-  this.name = dt.name
-  this.img = dt.img
+  this.id = dt.id.trim()
+  this.name = dt.name.trim()
+  this.img = dt.img.trim()
   this.birth = dt.birth
-  this.email = dt.email
-  this.nickname = dt.nickname
-  this.bio = dt.bio
+  this.email = dt.email.trim()
+  this.nickname = dt.nickname.trim()
+  this.bio = dt.bio.trim()
   }
 
   getAccountInfo(){
     return {
       name: this.name,
       img: this.img,
-      birth: this.birth,
+      birth: this.birth.getTime(),
       email: this.email,
       nickname: this.nickname,
       bio: this.bio

@@ -6,6 +6,7 @@ import { Header } from './components/ui/Header/Header'
 import { Wrapper } from './components/ui/Wrapper'
 import { ROUTING } from './config/routing.config'
 import { store } from './store/store'
+import './App.scss'
 
 const App = () => {
 	return (

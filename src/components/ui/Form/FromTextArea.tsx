@@ -1,18 +1,16 @@
-import cn from 'classnames'
 import { TextareaHTMLAttributes } from 'react'
-import { FormError } from '../../../types/form'
-import styles from './Form.module.scss'
+import { FormError } from '../../../consts/FORM_ERRORS'
 
 export interface IFormTextAreaProps
 	extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 	disable?: boolean
-	error?: FormError
+	errors?: FormError[]
 	errorClassName?: string
 }
 
 export const FormTextArea: React.FC<IFormTextAreaProps> = ({
 	disable,
-	error,
+	errors,
 	onChange,
 	errorClassName,
 	...rest
@@ -23,10 +21,15 @@ export const FormTextArea: React.FC<IFormTextAreaProps> = ({
 	}
 
 	return (
-		<div className={styles.textarea}>
+		<div>
 			<textarea onChange={handleChange} {...rest} disabled={disable} />
-			{error?.invalid && (
-				<p className={cn(errorClassName, styles.err)}>{error.text}</p>
+			{errors?.map(
+				(error: FormError, key: number) =>
+					error.invalid && (
+						<p key={key} className={errorClassName}>
+							{error.text}
+						</p>
+					)
 			)}
 		</div>
 	)

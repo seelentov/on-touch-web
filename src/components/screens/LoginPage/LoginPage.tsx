@@ -10,7 +10,7 @@ export interface ILoginPageProps {
 	style?: CSSProperties
 }
 
-type Pages = 'login' | 'register' | 'confirm'
+type Pages = 'login' | 'register'
 
 export const LoginPage: FC<ILoginPageProps> = ({ className, style }) => {
 	const [page, setPage] = useState<Pages>('register')
@@ -21,13 +21,11 @@ export const LoginPage: FC<ILoginPageProps> = ({ className, style }) => {
 
 			{page === 'login' ? <LoginForm /> : <SignUpForm />}
 
-			{page !== 'confirm' && (
-				<p onClick={() => setPage(page === 'login' ? 'register' : 'login')}>
-					{page === 'login'
-						? 'Еще нет аккаунта? Зарегистрируйтесь'
-						: 'Уже есть аккаунт?'}
-				</p>
-			)}
+			<p onClick={() => setPage(page === 'login' ? 'register' : 'login')}>
+				{page === 'login'
+					? 'Еще нет аккаунта? Зарегистрируйтесь'
+					: 'Уже есть аккаунт?'}
+			</p>
 		</div>
 	)
 }

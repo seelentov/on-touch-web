@@ -1,23 +1,29 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
-import { FormError } from '../../../types/form'
-import styles from './Form.module.scss'
+import { FormError } from '../../../consts/FORM_ERRORS'
 export interface IFormButtonProps
 	extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: ReactNode
-	error?: FormError
+	errors?: FormError[]
 	errorClassName?: string
 }
 
 export const FormButton: React.FC<IFormButtonProps> = ({
-	error,
+	errors,
 	errorClassName,
 	children,
 	...rest
 }) => {
 	return (
-		<div className={styles.button}>
+		<div>
 			<button {...rest}>{children}</button>
-			{error?.invalid && <p className={errorClassName}>{error.text}</p>}
+			{errors?.map(
+				(error: FormError, key: number) =>
+					error.invalid && (
+						<p key={key} className={errorClassName}>
+							{error.text}
+						</p>
+					)
+			)}
 		</div>
 	)
 }

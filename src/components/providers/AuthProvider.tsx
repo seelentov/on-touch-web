@@ -1,13 +1,18 @@
-import { FC, PropsWithChildren, useMemo } from 'react'
+import { FC, PropsWithChildren, useEffect } from 'react'
+import { useActions } from '../../hooks/useActions'
 import { useStoreBy } from '../../hooks/useStoreBy'
+import { getCookieLogin } from '../../utils/cookie/getCookieLogin'
 import { LoginPage } from '../screens/LoginPage/LoginPage'
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const user = useStoreBy('user')
+	const user = useStoreBy('user')
+	const { setUser } = useActions()
 
-  const renderedContent = useMemo(() => {
-    return user.id ? children : <LoginPage />
-  }, [user.id, children])
+	useEffect(() => {
+		if (getCookieLogin()) {
+			setUser(getCookieLogin())
+		}
+	}, [user])
 
-  return <>{renderedContent}</>
+	return <>{user.id ? children : <LoginPage />}</>
 }

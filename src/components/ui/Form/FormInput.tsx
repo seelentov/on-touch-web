@@ -1,17 +1,15 @@
-import cn from 'classnames'
 import { InputHTMLAttributes } from 'react'
-import { FormError } from '../../../types/form'
-import styles from './Form.module.scss'
+import { FormError } from '../../../consts/FORM_ERRORS'
 
 export interface IFormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	disable?: boolean
-	error?: FormError
+	errors?: FormError[]
 	errorClassName?: string
 }
 
 export const FormInput: React.FC<IFormInputProps> = ({
 	disable,
-	error,
+	errors,
 	onChange,
 	errorClassName,
 	...rest
@@ -22,10 +20,15 @@ export const FormInput: React.FC<IFormInputProps> = ({
 	}
 
 	return (
-		<div className={styles.input}>
+		<div>
 			<input onChange={handleChange} {...rest} disabled={disable} />
-			{error?.invalid && (
-				<p className={cn(errorClassName, styles.err)}>{error.text}</p>
+			{errors?.map(
+				(error: FormError, key: number) =>
+					error.invalid && (
+						<p key={key} className={errorClassName}>
+							{error.text}
+						</p>
+					)
 			)}
 		</div>
 	)

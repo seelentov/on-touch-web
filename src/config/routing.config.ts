@@ -1,8 +1,12 @@
-export class ROUTING {
-	static MAIN: string = '/'
-	static MESSAGES: string = this.MAIN
-	static DIALOG: string = 'dialog/'
-	static SEARCH: string = 'search/'
-	static PROFILE: string = 'profile/'
-	static SETTINGS: string = 'settings/'
-}
+const MAIN = '/'
+
+export const ROUTING = {
+	MAIN: MAIN,
+	MESSAGES: MAIN,
+	DIALOG: MAIN + 'dialog/',
+	SEARCH: MAIN + 'search/',
+	PROFILE: MAIN + 'profile/',
+	SETTINGS: MAIN + 'settings/',
+} as const
+
+export type ROUTING = (typeof ROUTING)[keyof typeof ROUTING]

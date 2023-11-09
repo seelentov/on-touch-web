@@ -12,6 +12,17 @@
   align-items: center;
 }
 
+.loadingBlock{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.56);
+  animation: Appearance 0.5s forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @keyframes Appearance {
   0%{
     opacity: 0

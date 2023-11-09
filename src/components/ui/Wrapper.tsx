@@ -1,15 +1,14 @@
 import { FC, PropsWithChildren, useContext } from 'react'
-import { MenuContext } from '../providers/MenuContextProvider'
+import { MenuContext } from '../providers/MenuProvider'
 
 export const Wrapper: FC<PropsWithChildren> = ({ children }) => {
 	const { isOpen } = useContext(MenuContext)
-  
+
 	return (
 		<div
 			className='wrapper'
 			style={{
-				paddingLeft: isOpen ? '320px' : '0px',
-				pointerEvents: isOpen ? 'none' : 'all',
+				paddingLeft: isOpen ? '320px' : '0px'
 			}}
 		>
 			{children}

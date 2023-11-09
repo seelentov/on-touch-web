@@ -4,7 +4,8 @@ import { CSSProperties, FC, ReactNode, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { MenuItem } from '../../../config/menu.config'
 import { useResize } from '../../../hooks/useResize'
-import { MenuContext } from '../../providers/MenuContextProvider'
+import { MenuContext } from '../../providers/MenuProvider'
+import { Messages } from '../Messages/Messages'
 import styles from './Header.module.scss'
 
 export interface IHeaderProps {
@@ -25,7 +26,7 @@ export const Header: FC<IHeaderProps> = ({ className, style, logo, menu }) => {
 					<Hamburger />
 				</div>
 			</div>
-			<Navbar menu={menu && menu} isOpen={isOpen} />
+			<Navbar menu={menu} isOpen={isOpen} />
 		</div>
 	)
 }
@@ -37,11 +38,14 @@ const Navbar: FC<{
 	return (
 		<div className={cn(styles.navbar, isOpen && styles.active)}>
 			{useResize().isScreenLg ? (
-				<div className={styles.navbarItemsDesktop}>
-					{menu?.map((menuItem: MenuItem, key: number) => (
-						<NavbarItem key={key} menuItem={menuItem} />
-					))}
-				</div>
+				<>
+					<div className={styles.navbarItemsDesktop}>
+						{menu?.map((menuItem: MenuItem, key: number) => (
+							<NavbarItem key={key} menuItem={menuItem} />
+						))}
+					</div>
+					<Messages />
+				</>
 			) : (
 				<div className={styles.navbarItems}>
 					{menu?.map((menuItem: MenuItem, key: number) => (

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Form } from '../../ui/Form/Form'
 import { FormInput } from '../../ui/Form/FormInput'
 
@@ -7,18 +7,18 @@ import { FORM_ERRORS } from '../../../consts/FORM_ERRORS'
 import { useActions } from '../../../hooks/useActions'
 import { FormLogin } from '../../../model/Forms/FormLogin'
 import { UserCookie } from '../../../model/User/UserCookie'
+import { LoadingContext } from '../../providers/LoadingProvider'
 import { FormButton } from '../../ui/Form/FormButton'
-import { Loading } from '../../ui/Loading/Loading'
 
 export const LoginForm = () => {
 	const [form, setForm] = useState<FormLogin>(new FormLogin())
 	const [errors, setErrors] = useState<FORM_ERRORS[] | []>([])
-	const [loading, setLoading] = useState<boolean>(false)
+	const { setGlobalLoading } = useContext(LoadingContext)
 	const { setUser } = useActions()
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		setLoading(true)
+		setGlobalLoading(true)
 		setErrors([])
 		const auth = getAuth()
 		signInWithEmailAndPassword(auth, form.login, form.password)
@@ -29,18 +29,16 @@ export const LoginForm = () => {
 				}
 
 				setUser(user)
-				setLoading(false)
+				setGlobalLoading(false)
 			})
 			.catch(error => {
 				setErrors([...errors, FORM_ERRORS.wrongLogin])
-				setLoading(false)
+				setGlobalLoading(false)
 			})
 	}
 
 	return (
 		<>
-			{loading && <Loading />}
-
 			<Form
 				handleSubmit={handleSubmit}
 				className='form-column'

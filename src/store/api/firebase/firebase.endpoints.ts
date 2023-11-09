@@ -15,10 +15,10 @@ import { db } from './firebase.api'
 
 type FBCondition = [string | FieldPath, WhereFilterOp, unknown]
 
-type CollData = (coll: string) => Promise<object[]>
+type CollData = <T>(coll: string) => Promise<T[]>
 type UpData = (coll: string, item: string, props: object) => Promise<void>
-type SingleData = (coll: string, item: string) => Promise<object>
-type SomeData = (coll: string, condition: FBCondition) => Promise<object>
+type SingleData = <T>(coll: string, item: string) => Promise<T>
+type SomeData = <T>(coll: string, condition: FBCondition) => Promise<T>
 
 export const updateData: UpData = async (
 	coll: string,
@@ -71,7 +71,7 @@ export const getSomeData: SomeData = async (coll, condition) => {
 	return new Promise((resolve, reject) => {
 		getDocs(
 			query(
-				collection(db, 'cities'),
+				collection(db, coll),
 				where(condition[0], condition[1], condition[2])
 			)
 		)
@@ -91,7 +91,7 @@ export const getSomeData: SomeData = async (coll, condition) => {
 	})
 }
 
-export const getData: SingleData = async (coll, item) => {
+export const getData: SingleData = async (coll: string, item:string) => {
 	return new Promise((resolve, reject) => {
 		getDoc(doc(db, coll, item))
 			.then(doc => {

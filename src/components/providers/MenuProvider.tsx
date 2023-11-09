@@ -7,7 +7,7 @@ interface IMenuContext {
 
 export const MenuContext = createContext<IMenuContext>()
 
-export const MenuContextProvider: FC<PropsWithChildren> = ({ children }) => {
+export const MenuProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [isOpen, setOpen] = useState<boolean>(false)
 
 	return (

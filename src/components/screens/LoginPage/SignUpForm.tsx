@@ -1,35 +1,35 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Form } from '../../ui/Form/Form'
 import { FormInput } from '../../ui/Form/FormInput'
 
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { FORM_ERRORS } from '../../../consts/FORM_ERRORS'
 import { useActions } from '../../../hooks/useActions'
 import { FormSignUp } from '../../../model/Forms/FormSignUp'
 import { UserCookie } from '../../../model/User/UserCookie'
 import { UserMain } from '../../../model/User/UserMain'
 import { addToData } from '../../../store/api/firebase/firebase.endpoints'
 import { signUpValidate } from '../../../utils/form/signUpValidate'
+import { LoadingContext } from '../../providers/LoadingProvider'
 import { FormButton } from '../../ui/Form/FormButton'
 import { FormDate } from '../../ui/Form/FromDate'
 import { FormTextArea } from '../../ui/Form/FromTextArea'
-import { Loading } from '../../ui/Loading/Loading'
-import { FORM_ERRORS } from '../../../consts/FORM_ERRORS'
 
 export const SignUpForm = () => {
 	const [form, setForm] = useState<FormSignUp>(new FormSignUp())
 	const [errors, setErrors] = useState<FORM_ERRORS[] | []>([])
-	const [loading, setLoading] = useState<boolean>(false)
+	const { globalLoading, setGlobalLoading } = useContext(LoadingContext)
 
 	const { setUser } = useActions()
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		if (loading) return
+		if (globalLoading) return
 
-		setLoading(true)
+		setGlobalLoading(true)
 		const errorsCheck = signUpValidate(form)
 		setErrors(errorsCheck)
-		if (errorsCheck.length !== 0) return setLoading(false)
+		if (errorsCheck.length !== 0) return setGlobalLoading(false)
 
 		const auth = getAuth()
 		createUserWithEmailAndPassword(auth, form.email, form.password)
@@ -45,13 +45,12 @@ export const SignUpForm = () => {
 							id: userCredential.user.uid,
 							token: userCredential.user.accessToken,
 						}
-
 						setUser(cookie)
-						setLoading(false)
+						setGlobalLoading(false)
 					})
 					.catch(error => {
 						console.log(error)
-						setLoading(false)
+						setGlobalLoading(false)
 					})
 			})
 			.catch(error => {
@@ -59,13 +58,12 @@ export const SignUpForm = () => {
 				if (stringError.includes('email-already-in-use')) {
 					setErrors([...errors, FORM_ERRORS.dublicateEmail])
 				}
-				setLoading(false)
+				setGlobalLoading(false)
 			})
 	}
 
 	return (
 		<>
-			{loading && <Loading />}
 			<Form
 				handleSubmit={handleSubmit}
 				className='form-column'

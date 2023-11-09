@@ -1,11 +1,11 @@
 export class UserMain {
-	private id: string
-	private name: string
-	private img: string | '/users/no-img.png'
-	private birth: string
-	private email: string
-	private nickname: string
-	private bio: string | ''
+	public id: string
+	public name: string
+	public img: string | '/users/no-img.png'
+	public birth: string
+	public email: string
+	public nickname: string
+	public bio: string | ''
 
 	constructor(dt: UserMain) {
 		this.id = dt.id.trim()
@@ -19,6 +19,7 @@ export class UserMain {
 
 	getAccountInfo() {
 		return {
+      id: this.id,
 			name: this.name,
 			img: this.img,
 			birth: this.birth,
@@ -28,11 +29,12 @@ export class UserMain {
 		}
 	}
 
-	getDialogInfo() {
-		return {
-			img: this.img,
-			nickname: this.nickname,
-		}
+	getNickname() {
+		return this.nickname
+	}
+
+  getImage() {
+		return this.img
 	}
 
 	getId() {

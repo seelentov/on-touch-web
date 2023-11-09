@@ -4,3 +4,23 @@
   color: rgb(221, 0, 0);
   font-size: 12px;
 }
+
+.text-header{
+  font-size: 22px;
+
+    @media(max-width: 768px){
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 136px;
+    }
+}
+
+.text-desc{
+  color: gray;
+
+  @media(max-width: 768px){
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 206px;
+  }
+}

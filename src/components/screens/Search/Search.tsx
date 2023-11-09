@@ -5,6 +5,7 @@ import { ROUTING } from '../../../config/routing.config'
 import { UserMain } from '../../../model/User/UserMain'
 import { getColl } from '../../../store/api/firebase/firebase.endpoints'
 import styles from './Search.module.scss'
+import { LoadingBlock } from '../../ui/Loading/LoadingBlock'
 
 export interface ISearchProps {
 	className?: string
@@ -14,9 +15,13 @@ export interface ISearchProps {
 export const Search: FC<ISearchProps> = ({ className, style }) => {
 	const [filterInput, setFilterInput] = useState<string>('')
 	const [users, setUsers] = useState<UserMain[]>()
-
+	const [loading, setLoading] = useState<boolean>()
 	useEffect(() => {
-		getColl('users').then((r: UserMain[]) => setUsers(r))
+		setLoading(true)
+		getColl('users')
+			.then((r: UserMain[]) => setUsers(r))
+			.then(()=>setLoading(false))
+			.catch(console.log)
 	}, [])
 
 	const filtredUsers = users?.filter(
@@ -25,15 +30,21 @@ export const Search: FC<ISearchProps> = ({ className, style }) => {
 	)
 
 	return (
-		<div className={cn(className, styles.block)} style={style}>
-			<input
-				className='input-black'
-				type='text'
-				value={filterInput}
-				onChange={e => setFilterInput(e.target.value)}
-			/>
-			{users && <UsersList users={filtredUsers} />}
-		</div>
+		<>
+			{loading ? (
+				<LoadingBlock />
+			) : (
+				<div className={cn(className, styles.block)} style={style}>
+					<input
+						className='input-black'
+						type='text'
+						value={filterInput}
+						onChange={e => setFilterInput(e.target.value)}
+					/>
+					{users && <UsersList users={filtredUsers} />}
+				</div>
+			)}
+		</>
 	)
 }
 

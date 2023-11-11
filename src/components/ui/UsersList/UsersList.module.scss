@@ -1,0 +1,10 @@
+.item{
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  P{
+    &:nth-child(1){
+    text-wrap: nowrap;
+    }
+  }
+}

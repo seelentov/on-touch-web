@@ -1,0 +1,91 @@
+.data {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 50px;
+
+  @media(max-width: 767px) {
+    flex-direction: column
+  }
+
+}
+
+.img {
+  height: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    border-radius: 50%;
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  @media(max-width: 767px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.info {
+  width: 100%;
+  overflow:hidden;
+  table {
+    width: 100%;
+    height: 100%;
+    @media (max-width: 767px) {
+      td {
+        padding: 10px 0;
+      }
+    }
+    td {
+      margin: 10px 0;
+      width: 100%;
+    }
+  }
+}
+
+.bio {
+  margin-top: 50px;
+  word-wrap: break-word;
+}
+
+input{
+  margin: auto 0;
+  
+}
+
+.editable{
+  display: flex;
+  @media (max-width: 767px) {
+    width: 192px;
+  }
+  button{
+    width: 33%;
+  }
+  input{
+    width: 67%;
+  }
+
+}
+
+.editableBio{
+  display: flex;
+  flex-direction: column;
+  textarea{
+    height: 200px;
+  }
+}
+
+.imgEditIcon{
+  border-radius: 50%;
+  background: rgb(0, 54, 154);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+position: absolute;
+cursor: pointer
+}

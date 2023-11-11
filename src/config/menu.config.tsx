@@ -5,24 +5,24 @@ import {
 	BiLoader,
 	BiMessageSquareDetail,
 	BiSearchAlt,
-	BiSolidHappyAlt,
+	BiSolidUserAccount,
 } from 'react-icons/bi'
 
 export type MenuItem = {
-	href: ROUTING
-	title: string
-	icon: ReactNode
+  readonly href: ROUTING
+  readonly title: string
+  readonly icon: ReactNode
 }
 
 export const HEADER_MENU: MenuItem[] = [
-	{
-		href: ROUTING.MESSAGES,
-		title: 'Сообщения',
-		icon: <BiMessageSquareDetail />,
-	},
-	{ href: ROUTING.SEARCH, title: 'Поиск', icon: <BiSearchAlt /> },
-	{ href: ROUTING.PROFILE, title: 'Профиль', icon: <BiSolidHappyAlt /> },
-	{ href: ROUTING.SETTINGS, title: 'Настройки', icon: <BiLoader /> },
-] as const
+  {
+    href: ROUTING.MESSAGES,
+    title: 'Сообщения',
+    icon: <BiMessageSquareDetail />,
+  },
+  { href: ROUTING.SEARCH, title: 'Поиск', icon: <BiSearchAlt /> },
+  { href: ROUTING.PROFILE, title: 'Профиль', icon: <BiSolidUserAccount /> },
+  { href: ROUTING.SETTINGS, title: 'Настройки', icon: <BiLoader /> },
+]
 
-export type HEADER = (typeof HEADER_MENU)[keyof typeof HEADER_MENU]
+export type HEADER_MENU = (typeof HEADER_MENU)[keyof typeof HEADER_MENU]

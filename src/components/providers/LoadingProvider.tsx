@@ -5,11 +5,10 @@ interface ILoading {
 	setGlobalLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const LoadingContext = createContext<ILoading>()
+export const LoadingContext = createContext<ILoading>({} as ILoading)
 
 export const LoadingProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [globalLoading, setGlobalLoading] = useState<boolean>(false)
-
 	return (
 		<>
 			{globalLoading && <Loading />}

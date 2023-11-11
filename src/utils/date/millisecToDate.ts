@@ -1,5 +1,5 @@
 export const millisecToDate = (time: number) => {
-  const date = new Date(time)
+  const date = new Date(time * 1000)
   const currentDate = new Date()
   
   const day = String(date.getDate())

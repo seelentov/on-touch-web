@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { Form } from '../../ui/Form/Form'
+import { Form, FormValues } from '../../ui/Form/Form'
 import { FormInput } from '../../ui/Form/FormInput'
 
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
@@ -7,7 +7,6 @@ import { FORM_ERRORS } from '../../../consts/FORM_ERRORS'
 import { useActions } from '../../../hooks/useActions'
 import { FormSignUp } from '../../../model/Forms/FormSignUp'
 import { UserCookie } from '../../../model/User/UserCookie'
-import { UserMain } from '../../../model/User/UserMain'
 import { addToData } from '../../../store/api/firebase/firebase.endpoints'
 import { signUpValidate } from '../../../utils/form/signUpValidate'
 import { LoadingContext } from '../../providers/LoadingProvider'
@@ -33,13 +32,15 @@ export const SignUpForm = () => {
 
 		const auth = getAuth()
 		createUserWithEmailAndPassword(auth, form.email, form.password)
-			.then(userCredential => {
-				const user = new UserMain({
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			.then((userCredential: any) => {
+				const user = {
 					id: userCredential.user.uid,
+					img: '/users/no-img.png',
 					...form,
-				})
+				}
 
-				addToData('users', userCredential.user.uid, user.getAccountInfo())
+				addToData('users', userCredential.user.uid, user)
 					.then(() => {
 						const cookie: UserCookie = {
 							id: userCredential.user.uid,
@@ -67,8 +68,9 @@ export const SignUpForm = () => {
 			<Form
 				handleSubmit={handleSubmit}
 				className='form-column'
-				values={form}
-				setValues={setForm}
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				values={form as any}
+				setValues={setForm as React.Dispatch<React.SetStateAction<FormValues>>}
 			>
 				<FormInput
 					name='name'
@@ -78,7 +80,7 @@ export const SignUpForm = () => {
 					errorClassName='text-err'
 					errors={[
 						{
-							invalid: errors.includes(FORM_ERRORS.name),
+							invalid: errors.includes(FORM_ERRORS.name as never),
 							text: 'Имя - обязательное поле',
 						},
 					]}
@@ -91,11 +93,11 @@ export const SignUpForm = () => {
 					errorClassName='text-err'
 					errors={[
 						{
-							invalid: errors.includes(FORM_ERRORS.nickname),
+							invalid: errors.includes(FORM_ERRORS.nickname as never),
 							text: 'Логин - обязательное поле',
 						},
 						{
-							invalid: errors.includes(FORM_ERRORS.dublicateNickName),
+							invalid: errors.includes(FORM_ERRORS.dublicateNickName as never),
 							text: 'Логин занят другим пользователем',
 						},
 					]}
@@ -108,11 +110,11 @@ export const SignUpForm = () => {
 					errorClassName='text-err'
 					errors={[
 						{
-							invalid: errors.includes(FORM_ERRORS.email),
+							invalid: errors.includes(FORM_ERRORS.email as never),
 							text: 'Email - обязательное поле',
 						},
 						{
-							invalid: errors.includes(FORM_ERRORS.dublicateEmail),
+							invalid: errors.includes(FORM_ERRORS.dublicateEmail as never),
 							text: 'Email занят другим пользователем',
 						},
 					]}
@@ -124,7 +126,7 @@ export const SignUpForm = () => {
 					errorClassName='text-err'
 					errors={[
 						{
-							invalid: errors.includes(FORM_ERRORS.birth),
+							invalid: errors.includes(FORM_ERRORS.birth as never),
 							text: 'Введите верную дату рождения',
 						},
 					]}
@@ -137,7 +139,7 @@ export const SignUpForm = () => {
 					errorClassName='text-err'
 					errors={[
 						{
-							invalid: errors.includes(FORM_ERRORS.password),
+							invalid: errors.includes(FORM_ERRORS.password as never),
 							text: 'Пароль должен быть более 6-ти символов',
 						},
 					]}
@@ -150,7 +152,7 @@ export const SignUpForm = () => {
 					errorClassName='text-err'
 					errors={[
 						{
-							invalid: errors.includes(FORM_ERRORS.confirmPassword),
+							invalid: errors.includes(FORM_ERRORS.confirmPassword as never),
 							text: 'Подтверждение пароля отличается',
 						},
 					]}

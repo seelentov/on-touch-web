@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
 	FieldPath,
 	WhereFilterOp,
@@ -48,18 +49,19 @@ export const addToData: UpData = async (coll, item, props) => {
 	})
 }
 
-export const getColl: CollData = async coll => {
+export const getColl: CollData = async <T>(coll: string) => {
 	return new Promise((resolve, reject) => {
 		getDocs(collection(db, coll))
 			.then(querySnapshot => {
-				const result: object[] = []
+				const result: T[] = []
 				querySnapshot.forEach(doc => {
-					result.push(doc.data())
+					result.push(doc.data() as T)
 				})
 				if (!result) {
 					throw new Error(`Коллекции ${coll} не существует`)
 				}
-				resolve(result)
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				resolve(result as any)
 			})
 			.catch(error => {
 				reject(error)
@@ -83,7 +85,8 @@ export const getSomeData: SomeData = async (coll, condition) => {
 				if (!result) {
 					throw new Error(`Коллекции ${coll} не существует`)
 				}
-				resolve(result)
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				resolve(result as any)
 			})
 			.catch(error => {
 				reject(error)
@@ -91,12 +94,12 @@ export const getSomeData: SomeData = async (coll, condition) => {
 	})
 }
 
-export const getData: SingleData = async (coll: string, item:string) => {
+export const getData: SingleData = async (coll: string, item: string) => {
 	return new Promise((resolve, reject) => {
 		getDoc(doc(db, coll, item))
 			.then(doc => {
 				if (doc.exists()) {
-					resolve(doc.data())
+					resolve(doc.data() as any)
 				} else {
 					throw new Error(`Объект ${item} отсутствует`)
 				}

@@ -5,7 +5,8 @@ export const useResize = () => {
 	const [width, setWidth] = useState(window.innerWidth)
 
 	useEffect(() => {
-		const handleResize = (event) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const handleResize = (event: any) => {
 			setWidth(event.target.innerWidth)
 		}
 		window.addEventListener('resize', handleResize)

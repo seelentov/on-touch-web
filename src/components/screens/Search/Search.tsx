@@ -1,11 +1,8 @@
-import cn from 'classnames'
 import { CSSProperties, FC, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ROUTING } from '../../../config/routing.config'
 import { UserMain } from '../../../model/User/UserMain'
 import { getColl } from '../../../store/api/firebase/firebase.endpoints'
-import styles from './Search.module.scss'
 import { LoadingBlock } from '../../ui/Loading/LoadingBlock'
+import { UsersList } from '../../ui/UsersList/UsersList'
 
 export interface ISearchProps {
 	className?: string
@@ -18,15 +15,15 @@ export const Search: FC<ISearchProps> = ({ className, style }) => {
 	const [loading, setLoading] = useState<boolean>()
 	useEffect(() => {
 		setLoading(true)
-		getColl('users')
+		getColl<UserMain>('users')
 			.then((r: UserMain[]) => setUsers(r))
-			.then(()=>setLoading(false))
+			.then(() => setLoading(false))
 			.catch(console.log)
 	}, [])
 
 	const filtredUsers = users?.filter(
 		user =>
-			user.name.includes(filterInput) || user.nickname.includes(filterInput)
+			user.name?.includes(filterInput) || user.nickname?.includes(filterInput)
 	)
 
 	return (
@@ -34,7 +31,7 @@ export const Search: FC<ISearchProps> = ({ className, style }) => {
 			{loading ? (
 				<LoadingBlock />
 			) : (
-				<div className={cn(className, styles.block)} style={style}>
+				<div className={className} style={style}>
 					<input
 						className='input-black'
 						type='text'
@@ -45,32 +42,5 @@ export const Search: FC<ISearchProps> = ({ className, style }) => {
 				</div>
 			)}
 		</>
-	)
-}
-
-export const UsersList: FC<{ users?: UserMain[] | [] }> = ({ users }) => {
-	return (
-		<div className={styles.list}>
-			{users &&
-				users.map((user: UserMain, key: number) => (
-					<UserItem key={key} user={user} />
-				))}
-		</div>
-	)
-}
-
-export const UserItem: FC<{ user: UserMain }> = ({ user }) => {
-	return (
-		<Link to={ROUTING.DIALOG + user.id}>
-			<div className={cn(styles.item, 'item-black')}>
-				<div className='img-round-70'>
-					<img src={user.img} alt={user.name} />
-				</div>
-				<div>
-					<p className='text-header'>{user.nickname}</p>
-					<p className='text-desc'>{user.name}</p>
-				</div>
-			</div>
-		</Link>
 	)
 }

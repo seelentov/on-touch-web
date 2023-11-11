@@ -12,6 +12,25 @@
   align-items: center;
 }
 
+.loadingItem{
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.56);
+  animation: Appearance 0.5s forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loaderItem{
+  border: 16px solid transparent;
+  
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  width: 15px;
+  height: 15px;
+}
+
 .loadingBlock{
   position: absolute;
   width: 100%;

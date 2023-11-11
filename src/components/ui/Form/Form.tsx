@@ -6,11 +6,12 @@ import React, {
 	useCallback,
 } from 'react'
 
+export type FormValues = object & {[key: string]: string}
 export interface IFormProps extends FormHTMLAttributes<HTMLFormElement> {
 	children: ReactNode
 	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-	values: { [key: string]: string }
-	setValues: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>
+	values: FormValues
+	setValues: React.Dispatch<React.SetStateAction<FormValues>>
 }
 
 export const Form = function ({

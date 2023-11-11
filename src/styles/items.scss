@@ -1,6 +1,84 @@
 .item-black{
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgb(73, 73, 73);
   border-radius: 4px;
 padding: 10px;
-background: rgba(255, 255, 255, 0.06);
+background: rgba(73, 73, 73);
+*{
+  color: white
 }
+
+}
+
+.item-white{
+  border: 1px solid rgba(181, 181, 181, 1);
+  border-radius: 4px;
+padding: 10px;
+background: rgba(181, 181, 181, 1);
+*{
+  color: rgb(0, 0, 0)
+}
+
+}
+
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.item-red-round{
+  left: -20px;
+  position: relative;
+  border-radius:50%;
+  background: rgb(142, 0, 0);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.point{
+  width: 10px;
+  height:10px;
+  background: rgb(142, 0, 0);
+  border-radius: 50%;
+  margin-right: auto;
+  position: relative;
+  left: -26px;
+  top: -12px;
+}
+
+
+.notification{
+  z-index: 10;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 300px;
+  height: 100px;
+  padding: 10px;
+  animation: received 5s forwards linear;
+  overflow: hidden;
+  p{
+    :nth-child(1){
+        font-size: 22px !important;
+    }
+    :nth-child(2){
+      word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    }
+    
+  }
+}
+
+.notification-black{
+  border-radius: 3px;
+border: 1px solid rgb(71, 71, 71);
+background: rgb(48, 48, 48);
+}
+

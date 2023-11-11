@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { Form } from '../../ui/Form/Form'
+import { Form, FormValues } from '../../ui/Form/Form'
 import { FormInput } from '../../ui/Form/FormInput'
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
@@ -22,7 +22,8 @@ export const LoginForm = () => {
 		setErrors([])
 		const auth = getAuth()
 		signInWithEmailAndPassword(auth, form.login, form.password)
-			.then(userCredential => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			.then((userCredential: any) => {
 				const user: UserCookie = {
 					id: userCredential.user.uid,
 					token: userCredential.user.accessToken,
@@ -31,7 +32,7 @@ export const LoginForm = () => {
 				setUser(user)
 				setGlobalLoading(false)
 			})
-			.catch(error => {
+			.catch(() => {
 				setErrors([...errors, FORM_ERRORS.wrongLogin])
 				setGlobalLoading(false)
 			})
@@ -42,8 +43,9 @@ export const LoginForm = () => {
 			<Form
 				handleSubmit={handleSubmit}
 				className='form-column'
-				values={form}
-				setValues={setForm}
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				values={form as any}
+				setValues={setForm as React.Dispatch<React.SetStateAction<FormValues>>}
 			>
 				<FormInput
 					name='login'
@@ -62,7 +64,7 @@ export const LoginForm = () => {
 					errorClassName='text-err'
 					errors={[
 						{
-							invalid: errors.includes(FORM_ERRORS.wrongLogin),
+							invalid: errors.includes(FORM_ERRORS.wrongLogin as never),
 							text: 'Неверный логин или пароль',
 						},
 					]}

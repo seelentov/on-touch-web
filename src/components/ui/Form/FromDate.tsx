@@ -6,6 +6,7 @@ export interface IFormDateProps extends InputHTMLAttributes<HTMLInputElement> {
 	disable?: boolean
 	errors?: FormError[]
 	errorClassName?: string
+  wrapperClassName?: string
 }
 
 export const FormDate: React.FC<IFormDateProps> = ({
@@ -13,6 +14,7 @@ export const FormDate: React.FC<IFormDateProps> = ({
 	errors,
 	onChange,
 	errorClassName,
+  wrapperClassName,
 	...rest
 }) => {
 	const [active, setActive] = useState<boolean>(false)
@@ -24,7 +26,7 @@ export const FormDate: React.FC<IFormDateProps> = ({
 	}
 
 	return (
-		<div>
+		<div className={wrapperClassName}>
 			<input
 				onChange={handleChange}
 				{...rest}

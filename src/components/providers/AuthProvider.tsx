@@ -1,11 +1,11 @@
 import { FC, PropsWithChildren, useEffect } from 'react'
 import { useActions } from '../../hooks/useActions'
-import { useStoreBy } from '../../hooks/useStoreBy'
+import { useAuth } from '../../hooks/useAuth'
 import { getCookieLogin } from '../../utils/cookie/getCookieLogin'
 import { LoginPage } from '../screens/LoginPage/LoginPage'
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-	const user = useStoreBy('user')
+	const user = useAuth()
 	const { setUser } = useActions()
 
 	useEffect(() => {
@@ -14,5 +14,5 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 		}
 	}, [user])
 
-	return <>{user.id ? children : <LoginPage />}</>
+	return <>{user ? children : <LoginPage />}</>
 }

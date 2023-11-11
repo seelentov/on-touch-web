@@ -5,6 +5,7 @@ export interface IFormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	disable?: boolean
 	errors?: FormError[]
 	errorClassName?: string
+  wrapperClassName?: string
 }
 
 export const FormInput: React.FC<IFormInputProps> = ({
@@ -12,6 +13,7 @@ export const FormInput: React.FC<IFormInputProps> = ({
 	errors,
 	onChange,
 	errorClassName,
+  wrapperClassName,
 	...rest
 }) => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +22,7 @@ export const FormInput: React.FC<IFormInputProps> = ({
 	}
 
 	return (
-		<div>
+		<div className={wrapperClassName}>
 			<input onChange={handleChange} {...rest} disabled={disable} />
 			{errors?.map(
 				(error: FormError, key: number) =>

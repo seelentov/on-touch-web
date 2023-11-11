@@ -1,4 +1,4 @@
-const MAIN = '/'
+const MAIN = '/' as const
 
 export const ROUTING = {
 	MAIN: MAIN,

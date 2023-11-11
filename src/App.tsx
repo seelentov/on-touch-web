@@ -1,16 +1,15 @@
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import './App.scss'
+import { Router } from './components/Router'
 import { AuthProvider } from './components/providers/AuthProvider'
 import { LoadingProvider } from './components/providers/LoadingProvider'
 import { MenuProvider } from './components/providers/MenuProvider'
-import { Search } from './components/screens/Search/Search'
+import { NotificationProvider } from './components/providers/NotificationProvider'
 import { Header } from './components/ui/Header/Header'
 import { Logo } from './components/ui/Logo/Logo'
-import { Messages } from './components/ui/Messages/Messages'
 import { Wrapper } from './components/ui/Wrapper'
 import { HEADER_MENU } from './config/menu.config'
-import { ROUTING } from './config/routing.config'
 import { store } from './store/store'
 
 const App = () => {
@@ -19,15 +18,14 @@ const App = () => {
 			<BrowserRouter>
 				<LoadingProvider>
 					<AuthProvider>
-						<MenuProvider>
-							<Header menu={HEADER_MENU} logo={<Logo />} />
-							<Wrapper>
-								<Routes>
-									<Route path={ROUTING.MESSAGES} element={<Messages />} />
-									<Route path={ROUTING.SEARCH} element={<Search />} />
-								</Routes>
-							</Wrapper>
-						</MenuProvider>
+						<NotificationProvider>
+							<MenuProvider>
+								<Header menu={HEADER_MENU} logo={<Logo />} />
+								<Wrapper>
+									<Router />
+								</Wrapper>
+							</MenuProvider>
+						</NotificationProvider>
 					</AuthProvider>
 				</LoadingProvider>
 			</BrowserRouter>

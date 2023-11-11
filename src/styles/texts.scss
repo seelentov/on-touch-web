@@ -1,26 +1,36 @@
-.text-err{
+.text-err {
   width: 100%;
   height: 0px;
   color: rgb(221, 0, 0);
   font-size: 12px;
 }
 
-.text-header{
+.text-header {
   font-size: 22px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 136px;
+  text-wrap: nowrap;
 
-    @media(max-width: 768px){
-      text-overflow: ellipsis;
-      overflow: hidden;
-      max-width: 136px;
-    }
+  @media(max-width: 768px) {
+    font-size: 18px;
+  }
+
+  margin-right: auto;
 }
 
-.text-desc{
+.text-desc {
   color: gray;
 
-  @media(max-width: 768px){
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 206px;
-  }
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 206px;
+
+}
+
+.text-mini {
+  width: 100%;
+  height: 0px;
+  font-size: 12px;
 }

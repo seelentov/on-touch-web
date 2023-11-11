@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger'
 import { userSlice } from './user/user.slice'
 import { settingsSlice } from './settings/settings.slice';
 
-const logger = createLogger({
+createLogger({
 	collapsed: true,
 })
 

@@ -6,13 +6,12 @@
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  background: rgba(0, 0, 0, 0);
   transition: all .2s;
 }
 
 .active {
   pointer-events: all;
-  background: rgba(0, 0, 0, 0.355);
+  background: rgb(91, 91, 91);
   left: 0% !important;
 }
 
@@ -29,7 +28,7 @@
   top: 60px;
   left: -320px;
   width: 320px;
-  background: rgba(0, 0, 0, 0.355);
+  background: rgb(48, 48, 48);
   height: 100vh;
   z-index: 3;
 }
@@ -60,7 +59,7 @@ width: 100%;
 
 .top {
   height: 60px;
-  background: rgba(0, 0, 0, 0.355);
+  background: rgba(48, 48, 48);
   z-index: 3;
   position: relative;
 }
@@ -93,3 +92,4 @@ width: 100%;
     width: 70%;
   }
 }
+

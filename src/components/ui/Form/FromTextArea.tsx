@@ -6,6 +6,7 @@ export interface IFormTextAreaProps
 	disable?: boolean
 	errors?: FormError[]
 	errorClassName?: string
+  wrapperClassName?: string
 }
 
 export const FormTextArea: React.FC<IFormTextAreaProps> = ({
@@ -13,6 +14,7 @@ export const FormTextArea: React.FC<IFormTextAreaProps> = ({
 	errors,
 	onChange,
 	errorClassName,
+  wrapperClassName,
 	...rest
 }) => {
 	const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -21,7 +23,7 @@ export const FormTextArea: React.FC<IFormTextAreaProps> = ({
 	}
 
 	return (
-		<div>
+		<div className={wrapperClassName}>
 			<textarea onChange={handleChange} {...rest} disabled={disable} />
 			{errors?.map(
 				(error: FormError, key: number) =>

@@ -15,7 +15,7 @@ export const UserItem: FC<IUserItemProps> = ({ user, className }) => {
 	return (
 		<div className={className}>
 			<Link to={user ? ROUTING.PROFILE + user.id : ''}>
-				<div className={cn(styles.item, 'item-black')}>
+				<div className={cn(styles.item, 'item-1')}>
 					<div className='img-round-70'>
 						{user ? <img src={user.img} alt={user.name} /> : <LoadingItem />}
 					</div>

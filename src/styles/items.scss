@@ -1,26 +1,26 @@
-.item-black{
-  border: 1px solid rgb(73, 73, 73);
+.item-1 {
   border-radius: 4px;
-padding: 10px;
-background: rgba(73, 73, 73);
-*{
-  color: white
-}
+  padding: 10px;
+
+  * {
+    color: white
+  }
 
 }
 
-.item-white{
+.item-2 {
   border: 1px solid rgba(181, 181, 181, 1);
   border-radius: 4px;
-padding: 10px;
-background: rgba(181, 181, 181, 1);
-*{
-  color: rgb(0, 0, 0)
-}
+  padding: 10px;
+  background: rgba(181, 181, 181, 1);
+
+  * {
+    color: rgb(0, 0, 0)
+  }
 
 }
 
-.empty{
+.empty {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,10 +28,10 @@ background: rgba(181, 181, 181, 1);
   height: 100vh;
 }
 
-.item-red-round{
+.item-red-round {
   left: -20px;
   position: relative;
-  border-radius:50%;
+  border-radius: 50%;
   background: rgb(142, 0, 0);
   width: 20px;
   height: 20px;
@@ -41,9 +41,9 @@ background: rgba(181, 181, 181, 1);
   font-size: 12px;
 }
 
-.point{
+.point {
   width: 10px;
-  height:10px;
+  height: 10px;
   background: rgb(142, 0, 0);
   border-radius: 50%;
   margin-right: auto;
@@ -53,7 +53,8 @@ background: rgba(181, 181, 181, 1);
 }
 
 
-.notification{
+.notification {
+  display: flex;
   z-index: 10;
   position: absolute;
   right: 10px;
@@ -63,22 +64,28 @@ background: rgba(181, 181, 181, 1);
   padding: 10px;
   animation: received 5s forwards linear;
   overflow: hidden;
-  p{
-    :nth-child(1){
-        font-size: 22px !important;
+
+  img{
+    width: 50px;
+    height: 50px;
+    margin: auto 0;
+    border-radius: 50%;
+  }
+
+  p {
+    :nth-child(1) {
+      font-size: 22px !important;
     }
-    :nth-child(2){
+
+    :nth-child(2) {
       word-wrap: break-word;
-    text-overflow: ellipsis;
-    overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
-    
+
   }
 }
 
-.notification-black{
+.notification-1 {
   border-radius: 3px;
-border: 1px solid rgb(71, 71, 71);
-background: rgb(48, 48, 48);
 }
-

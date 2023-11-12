@@ -26,7 +26,7 @@ export const ProfilePage: FC<IProfileProps> = ({ className, style }) => {
 	const { id: pageId } = useParams()
 	const { id: userId } = useStoreBy('user')
 
-  const navigate = useNavigate()
+	const navigate = useNavigate()
 
 	const [user, setUser] = useState<UserMain>()
 	const [loading, setLoading] = useState<boolean>()
@@ -34,7 +34,7 @@ export const ProfilePage: FC<IProfileProps> = ({ className, style }) => {
 
 	useEffect(() => {
 		if (!pageId) return
-    if(userId === pageId) navigate(ROUTING.PROFILE)
+		if (userId === pageId) navigate(ROUTING.PROFILE)
 		setLoading(true)
 		getData<UserMain>('users', pageId)
 			.then((r: UserMain) => setUser(r))
@@ -68,7 +68,7 @@ export const ProfilePage: FC<IProfileProps> = ({ className, style }) => {
 				<div className={cn(className, styles.page)} style={style}>
 					<ProfileData user={user} />
 					<Link to={ROUTING.DIALOG + dialogId}>
-						<button className='button-black'>Войти в диалог</button>
+						<button className='button-1'>Войти в диалог</button>
 					</Link>
 					{user.bio && <ProfileBio userBio={user.bio} />}
 				</div>

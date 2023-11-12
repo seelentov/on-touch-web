@@ -33,7 +33,7 @@ export const Search: FC<ISearchProps> = ({ className, style }) => {
 			) : (
 				<div className={className} style={style}>
 					<input
-						className='input-black'
+						className='input-1'
 						type='text'
 						value={filterInput}
 						onChange={e => setFilterInput(e.target.value)}

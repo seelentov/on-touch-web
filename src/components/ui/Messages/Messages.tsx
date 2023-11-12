@@ -35,9 +35,7 @@ export const Messages: FC<IMessagesProps> = ({ className, style }) => {
 				})
 
 				const dialogs = result
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-					.sort((a: any, b: any) => b.lastUpd - a.lastUpd)
-					
+					.sort((a, b) => b.lastUpd - a.lastUpd)
 					.filter(dialog => dialog.lastMessage)
 				setDialogs(dialogs)
 				setLoading(false)
@@ -108,7 +106,7 @@ const MessagesItem: FC<{ dialog: Dialog }> = ({ dialog }) => {
 		<>
 			{dialog && (
 				<Link to={ROUTING.DIALOG + dialog.id}>
-					<div className={cn(styles.item, 'item-black')}>
+					<div className={cn(styles.item, 'item-1')}>
 						<div className='img-round-70'>
 							{companion ? (
 								<img
@@ -131,7 +129,7 @@ const MessagesItem: FC<{ dialog: Dialog }> = ({ dialog }) => {
 								</p>
 							</div>
 
-							<p className='text-desc'>
+							<p className={cn(styles.itemMessage, 'text-desc')}>
 								{dialog && dialog.lastMessage ? dialog.lastMessage : ''}
 							</p>
 						</div>

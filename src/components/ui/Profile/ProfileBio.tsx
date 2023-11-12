@@ -20,18 +20,20 @@ export const ProfileBio: FC<{
 	}
 
 	return (
-		<div className={cn(styles.bio, 'item-black')}>
+		<div className={cn(styles.bio, 'item-1')}>
+			<p>Обо мне</p>
+			<br />
 			{editable ? (
 				edit ? (
 					<div className={styles.editableBio}>
 						<textarea
-							className='input-black'
+							className='input-1'
 							name={'bio'}
 							value={input}
 							onChange={e => setInput(e.target.value)}
 							onBlur={() => handleChange()}
 						/>
-						<button className='button-black' onClick={() => handleChange()}>
+						<button className='button-1' onClick={() => handleChange()}>
 							save
 						</button>
 					</div>

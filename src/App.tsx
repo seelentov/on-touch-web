@@ -11,22 +11,25 @@ import { Logo } from './components/ui/Logo/Logo'
 import { Wrapper } from './components/ui/Wrapper'
 import { HEADER_MENU } from './config/menu.config'
 import { store } from './store/store'
+import { SettingsProvider } from './components/providers/SettingsProvider'
 
 const App = () => {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
 				<LoadingProvider>
-					<AuthProvider>
-						<NotificationProvider>
-							<MenuProvider>
-								<Header menu={HEADER_MENU} logo={<Logo />} />
-								<Wrapper>
-									<Router />
-								</Wrapper>
-							</MenuProvider>
-						</NotificationProvider>
-					</AuthProvider>
+					<SettingsProvider>
+						<AuthProvider>
+							<NotificationProvider>
+								<MenuProvider>
+									<Header menu={HEADER_MENU} logo={<Logo />} />
+									<Wrapper>
+										<Router />
+									</Wrapper>
+								</MenuProvider>
+							</NotificationProvider>
+						</AuthProvider>
+					</SettingsProvider>
 				</LoadingProvider>
 			</BrowserRouter>
 		</Provider>

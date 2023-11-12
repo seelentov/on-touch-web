@@ -1,0 +1,109 @@
+.theme-white {
+  background: white;
+
+  * {
+    color: black !important;
+  }
+
+  .button-1{
+    border: 1px solid rgba(87, 87, 87, 1);
+    background: rgb(159, 159, 159);
+    &:hover {
+      background: rgb(48, 48, 48);
+    }
+  
+    &:disabled {
+      cursor: default;
+      background: rgb(28, 28, 28);
+    }
+    
+  }
+  .navbar{
+    background: rgb(255, 255, 255);
+  }
+  
+  .item-1 {
+    border: 1px solid rgb(73, 73, 73);
+    background: rgb(255, 255, 255);
+  }
+
+  .input-1 {
+    border: 1px solid rgb(71, 71, 71);
+    background: rgb(255, 255, 255);
+  }
+
+  .notification-1 {
+    border: 1px solid rgb(71, 71, 71);
+    background: rgb(208, 208, 208);
+  }
+
+  .textarea-1 {
+    border: 1px solid rgb(71, 71, 71);
+    background: rgb(208, 208, 208);
+  }
+
+  .item-2 {
+    border: 1px solid rgba(181, 181, 181, 1);
+    border-radius: 4px;
+    padding: 10px;
+    background: rgb(73, 73, 73);
+
+    * {
+      color: rgb(255, 255, 255) !important
+    }
+
+  }
+
+}
+
+.theme-black {
+  color: white !important;
+
+  .navbar{
+    background: rgb(48, 48, 48);
+  }
+
+  .button-1{
+    border: 1px solid rgba(87, 87, 87, 1);
+    background: rgba(0, 54, 154, 1);
+    &:hover {
+      background: rgba(56, 126, 255, 1);
+    }
+  
+    &:disabled {
+      cursor: default;
+      background: rgb(0, 20, 56);
+    }
+  }
+  .item-1 {
+    border: 1px solid rgb(73, 73, 73);
+    background: rgb(73, 73, 73);
+  }
+
+  .input-1 {
+    border: 1px solid rgb(71, 71, 71);
+    background: rgb(48, 48, 48);
+  }
+
+  .notification-1 {
+    border: 1px solid rgb(71, 71, 71);
+    background: rgb(48, 48, 48);
+  }
+
+  .textarea-1 {
+    border: 1px solid rgb(71, 71, 71);
+    background: rgb(48, 48, 48);
+  }
+
+  .item-2 {
+    border: 1px solid rgba(181, 181, 181, 1);
+    border-radius: 4px;
+    padding: 10px;
+    background: rgba(181, 181, 181, 1);
+
+    * {
+      color: rgb(0, 0, 0)
+    }
+
+  }
+}

@@ -11,7 +11,6 @@
 
 .active {
   pointer-events: all;
-  background: rgb(91, 91, 91);
   left: 0% !important;
 }
 
@@ -28,9 +27,9 @@
   top: 60px;
   left: -320px;
   width: 320px;
-  background: rgb(48, 48, 48);
   height: 100vh;
   z-index: 3;
+  border-right: rgb(54, 54, 54) 1px solid;
 }
 
 .navbarItems {
@@ -59,9 +58,9 @@ width: 100%;
 
 .top {
   height: 60px;
-  background: rgba(48, 48, 48);
   z-index: 3;
   position: relative;
+  border-bottom: rgb(54, 54, 54) 1px solid;
 }
 
 .burgerBtn {

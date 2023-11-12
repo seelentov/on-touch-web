@@ -25,7 +25,7 @@ export const Header: FC<IHeaderProps> = ({ className, style, logo, menu }) => {
 
 	return (
 		<div className={cn(className, styles.main)} style={style}>
-			<div className={styles.top}>
+			<div className={cn(styles.top, 'navbar')}>
 				<div className={styles.logo}>{logo}</div>
 				<div className={styles.burgerBtn} onClick={() => setOpen(!isOpen)}>
 					<Hamburger />
@@ -43,7 +43,7 @@ const Navbar: FC<{
 }> = ({ menu, isOpen }) => {
 	const { count } = useContext(NotificationContext)
 	return (
-		<div className={cn(styles.navbar, isOpen && styles.active)}>
+		<div className={cn(styles.navbar, isOpen && styles.active, 'navbar')}>
 			{useResize().isScreenLg ? (
 				<>
 					<div className={styles.navbarItemsDesktop}>

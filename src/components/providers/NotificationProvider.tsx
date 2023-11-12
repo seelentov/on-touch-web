@@ -3,17 +3,19 @@ import {
 	FC,
 	PropsWithChildren,
 	createContext,
+	useContext,
 	useEffect,
 	useState,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ROUTING } from '../../config/routing.config'
 import { useStoreBy } from '../../hooks/useStoreBy'
 import { Dialog } from '../../model/Messages/Dialog'
 import { UserMain } from '../../model/User/UserMain'
 import { db } from '../../store/api/firebase/firebase.api'
 import { getData } from '../../store/api/firebase/firebase.endpoints'
 import { soundNotification } from '../../utils/notifications/soundNotification'
-import { ROUTING } from '../../config/routing.config'
+import { SettingsContext } from './SettingsProvider'
 
 interface INotificationContext {
 	count: number
@@ -28,11 +30,14 @@ export type Notification = {
 	header: string
 	text: string
 	href: string
+  img: string
 }
 
 export const NotificationProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [count, setCount] = useState<number>(0)
 	const [notification, setNotification] = useState<Notification | null>(null)
+
+	const { settings } = useContext(SettingsContext)
 
 	const { id } = useStoreBy('user')
 	useEffect(() => {
@@ -54,17 +59,19 @@ export const NotificationProvider: FC<PropsWithChildren> = ({ children }) => {
 				setCount(myNewDialogs.length)
 
 				if (lastNewDialog.lastSenler !== id) {
-					soundNotification()
+					if (settings.soundNotif) {
+						soundNotification()
+					}
+
 					getData<UserMain>('users', lastNewDialog.lastSenler).then(
 						(r: UserMain) => {
 							setNotification({
 								header: r.nickname,
+                img: r.img,
 								text: lastNewDialog.lastMessage,
 								href: lastNewDialog.id,
 							})
-							setTimeout(() => {
-								setNotification(null)
-							}, 5000)
+							
 						}
 					)
 				}
@@ -94,14 +101,18 @@ export const NotificationItem: FC<{
 	const navigate = useNavigate()
 
 	const handleClose = () => {
-    setNotification(null)
+		setNotification(null)
 		navigate(ROUTING.DIALOG + notification.href)
 	}
 
 	return (
-		<div className='notification notification-black' onClick={()=>handleClose()}>
-			<p className='text-header'>{notification.header}</p>
+		<div className='notification notification-1' onClick={() => handleClose()}>
+      <img src={notification.img} alt={notification.header} />
+      <div>
+      <p className='text-header'>{notification.header}</p>
 			<p className='text-desc'>{notification.text}</p>
+      </div>
+			
 		</div>
 	)
 }

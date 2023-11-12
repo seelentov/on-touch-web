@@ -76,7 +76,7 @@ export const SignUpForm = () => {
 					name='name'
 					placeholder='Ваше имя'
 					type='text'
-					className='input-black'
+					className='input-1'
 					errorClassName='text-err'
 					errors={[
 						{
@@ -89,7 +89,7 @@ export const SignUpForm = () => {
 					name='nickname'
 					placeholder='Отображаемый логин'
 					type='text'
-					className='input-black'
+					className='input-1'
 					errorClassName='text-err'
 					errors={[
 						{
@@ -106,7 +106,7 @@ export const SignUpForm = () => {
 					name='email'
 					placeholder='Ваш e-mail'
 					type='email'
-					className='input-black'
+					className='input-1'
 					errorClassName='text-err'
 					errors={[
 						{
@@ -122,7 +122,7 @@ export const SignUpForm = () => {
 				<FormDate
 					name='birth'
 					placeholder='Введите дату своего рождения'
-					className='input-black'
+					className='input-1'
 					errorClassName='text-err'
 					errors={[
 						{
@@ -135,7 +135,7 @@ export const SignUpForm = () => {
 					name='password'
 					placeholder='Придумайте надежный пароль'
 					type='password'
-					className='input-black'
+					className='input-1'
 					errorClassName='text-err'
 					errors={[
 						{
@@ -148,7 +148,7 @@ export const SignUpForm = () => {
 					name='confirmPassword'
 					placeholder='Подтвердите пароль'
 					type='password'
-					className='input-black'
+					className='input-1'
 					errorClassName='text-err'
 					errors={[
 						{
@@ -161,11 +161,11 @@ export const SignUpForm = () => {
 				<FormTextArea
 					name='bio'
 					placeholder='Напишите кратко о себе или оставьте поле пустым'
-					className='textarea-black'
+					className='textarea-1'
 					errorClassName='text-err'
 				/>
 
-				<FormButton className='input-black'>Войти</FormButton>
+				<FormButton className='input-1'>Войти</FormButton>
 			</Form>
 		</>
 	)

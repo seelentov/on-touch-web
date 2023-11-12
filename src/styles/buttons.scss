@@ -1,22 +1,14 @@
-.button-black {
+.button-1 {
   padding: 10px;
   width: 100%;
   border-radius: 3px;
-  border: 1px solid rgba(87, 87, 87, 1);
-  background: rgba(0, 54, 154, 1);
+  
   transition: all .2s;
 
-  &:hover {
-    background: rgba(56, 126, 255, 1);
-  }
 
-  &:disabled {
-    cursor: default;
-    background: rgb(0, 20, 56);
-  }
 }
 
-.button-red{
+.button-red {
   padding: 10px;
   width: 100%;
   border-radius: 3px;

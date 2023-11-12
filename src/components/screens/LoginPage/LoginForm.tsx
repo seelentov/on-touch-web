@@ -51,13 +51,13 @@ export const LoginForm = () => {
 					name='login'
 					placeholder='Логин'
 					type='text'
-					className='input-black'
+					className='input-1'
 				/>
 				<FormInput
 					name='password'
 					type='password'
 					placeholder='Пароль'
-					className='input-black'
+					className='input-1'
 					errorClassName='text-err'
 				/>
 				<FormButton
@@ -68,7 +68,7 @@ export const LoginForm = () => {
 							text: 'Неверный логин или пароль',
 						},
 					]}
-					className='input-black'
+					className='input-1'
 				>
 					Войти
 				</FormButton>

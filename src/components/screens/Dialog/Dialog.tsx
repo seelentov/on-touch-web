@@ -16,7 +16,10 @@ import {
 	useRef,
 	useState,
 } from 'react'
+import { BiImageAlt, BiSmile } from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
+import { STORAGE_PATH } from '../../../config/storage.config'
+import { EMOJI } from '../../../consts/EMOJIES'
 import { useStoreBy } from '../../../hooks/useStoreBy'
 import { Dialog } from '../../../model/Messages/Dialog'
 import { Message } from '../../../model/Messages/Message'
@@ -28,11 +31,9 @@ import {
 	updateData,
 } from '../../../store/api/firebase/firebase.endpoints'
 import { generateId } from '../../../utils/data/generateId'
+import { uploadImage } from '../../../utils/data/uploadImage'
 import { millisecToDate } from '../../../utils/date/millisecToDate'
 import { MenuContext } from '../../providers/MenuProvider'
-import { Form, FormValues } from '../../ui/Form/Form'
-import { FormButton } from '../../ui/Form/FormButton'
-import { FormInput } from '../../ui/Form/FormInput'
 import { LoadingBlock } from '../../ui/Loading/LoadingBlock'
 import { UserItem } from '../../ui/UsersList/UserItem'
 import styles from './Dialog.module.scss'
@@ -68,14 +69,11 @@ export const DialogPage: FC<IDialogProps> = ({ className, style }) => {
 					result.push(doc.data() as Message)
 				})
 
-				const messages = result.sort(
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					(a: any, b: any) => a.createAt - b.createAt
-				)
-				const lastMessage = messages[messages.length - 1]
-				setMessages(messages)
+				const sortedResult = result.sort((a, b) => a.createAt - b.createAt)
 
-        
+				setMessages(sortedResult)
+
+				const lastMessage = sortedResult[sortedResult.length - 1]
 				if (lastMessage && lastMessage.user !== userId) {
 					updateData('dialog', pageId, {
 						new: 0,
@@ -122,22 +120,21 @@ const DialogCompanion: FC<{ companionId?: string }> = ({ companionId }) => {
 }
 
 const DialogSendInput: FC<{ dialogId?: string }> = ({ dialogId }) => {
-	const [input, setInput] = useState({
-		message: '',
-	})
-
 	const { isOpen } = useContext(MenuContext)
 	const { id: user } = useStoreBy('user')
 
+	const [input, setInput] = useState<string>('')
+	const [isEmojiOpen, setEmojiOpen] = useState<boolean>(false)
+
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
-		if (!input.message || !dialogId) return
+		if (!input || !dialogId) return
 
 		const messageId = generateId()
 		const message: Message = new Message({
 			id: messageId,
 			dialogId: dialogId,
-			text: input.message,
+			text: input,
 			createAt: serverTimestamp(),
 			user: user,
 		})
@@ -150,39 +147,109 @@ const DialogSendInput: FC<{ dialogId?: string }> = ({ dialogId }) => {
 			}
 		})
 
-		setInput({
-			message: '',
-		})
+		setInput('')
 		await addToData('messages', messageId, message)
 		await updateData('dialog', dialogId, {
 			lastSenler: user,
 			lastUpd: serverTimestamp(),
-			lastMessage: input.message,
+			lastMessage: input,
+			new: increment(1),
+		})
+	}
+
+	const handleFileUpload = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		if (!event.target.files) return
+		const file = event.target.files[0]
+		const imageUrl = await uploadImage(file, STORAGE_PATH.MESSAGES)
+
+		if (!dialogId) return
+
+		const messageId = generateId()
+
+		const message: Message = new Message({
+			id: messageId,
+			dialogId: dialogId,
+			text: imageUrl,
+			createAt: serverTimestamp(),
+			user: user,
+			type: 'img',
+		})
+
+		await addToData('messages', messageId, message)
+		await updateData('dialog', dialogId, {
+			lastSenler: user,
+			lastUpd: serverTimestamp(),
+			lastMessage: 'Изображение',
 			new: increment(1),
 		})
 	}
 
 	return (
-		<Form
-			values={input}
-			setValues={setInput as React.Dispatch<React.SetStateAction<FormValues>>}
-			className={styles.input}
-			handleSubmit={handleSubmit}
+		<form
+			onSubmit={e => handleSubmit(e)}
 			style={{ paddingRight: isOpen ? '320px' : '0' }}
+			className={styles.input}
 		>
-			<FormInput
-				name='message'
-				className='input-black'
-				wrapperClassName='form__input'
+			<input
+				type='text'
+				className='input-1'
+				value={input}
+				onChange={e => setInput(e.target.value)}
 			/>
-			<FormButton
-				className='button-black'
-				disable={!input.message}
-				wrapperClassName='form__button'
+			<div
+				className={cn('button-1', styles.emojiBtn)}
+				style={{ background: isEmojiOpen ? 'rgb(56, 126, 255)' : '' }}
+				onClick={() => setEmojiOpen(!isEmojiOpen)}
 			>
-				{'>'}
-			</FormButton>
-		</Form>
+				<BiSmile />
+			</div>
+			<div className='file-input-2'>
+				<input type='file' id='message-img' onChange={handleFileUpload} />
+				<label htmlFor='message-img' className='button-1'>
+					<BiImageAlt />
+				</label>
+			</div>
+			{isEmojiOpen && (
+				<EmojiList emojiList={EMOJI} state={input} setState={setInput} />
+			)}
+			<button className='button-1'>{'SND'}</button>
+		</form>
+	)
+}
+
+interface IEmojiListProps {
+	state: string
+	setState: React.Dispatch<React.SetStateAction<string>>
+	emojiList: string[]
+}
+
+export const EmojiList: FC<IEmojiListProps> = ({
+	state,
+	setState,
+	emojiList,
+}) => {
+	const { isOpen } = useContext(MenuContext)
+
+	const EmojiItem: FC<{ emoji: string }> = ({ emoji }) => (
+		<div
+			className={cn(styles.emojiItem, 'item-1')}
+			onClick={() => setState(state + emoji)}
+		>
+			{emoji}
+		</div>
+	)
+
+	return (
+		<div
+			className={cn(styles.emojies, 'item-1')}
+			style={{ paddingRight: isOpen ? '320px' : '0px' }}
+		>
+			{emojiList.map((emoji, key) => (
+				<EmojiItem key={key} emoji={emoji} />
+			))}
+		</div>
 	)
 }
 
@@ -199,18 +266,37 @@ export const DialogList: FC<{ messages: Message[] }> = ({ messages }) => {
 
 	return (
 		<div className={styles.list} ref={listRef}>
-			{messages &&
-				messages.map((message: Message, key: number) => (
-					<DialogItem
-						key={key}
-						message={message}
-						className={
-							message.user === id
-								? cn(styles.userItem, 'item-black')
-								: cn(styles.compItem, 'item-white')
-						}
-					/>
-				))}
+			{messages ? (
+				messages.map((message: Message, key: number) => {
+					if (message.type === 'img') {
+						return (
+							<DialogItemImg
+								key={key}
+								message={message}
+								className={
+									message.user === id
+										? cn(styles.userItem, 'item-1')
+										: cn(styles.compItem, 'item-2')
+								}
+							/>
+						)
+					}
+
+					return (
+						<DialogItem
+							key={key}
+							message={message}
+							className={
+								message.user === id
+									? cn(styles.userItem, 'item-1')
+									: cn(styles.compItem, 'item-2')
+							}
+						/>
+					)
+				})
+			) : (
+				<p style={{ textAlign: 'center' }}>Сообщений пока нет!</p>
+			)}
 		</div>
 	)
 }
@@ -224,6 +310,17 @@ const DialogItem: FC<IDialogItemProps> = ({ message, className }) => {
 	return (
 		<div className={cn(className, styles.item)}>
 			<p>{message.text}</p>
+			<p>
+				{message?.createAt ? millisecToDate(message.createAt.seconds) : <br />}
+			</p>
+		</div>
+	)
+}
+
+const DialogItemImg: FC<IDialogItemProps> = ({ message, className }) => {
+	return (
+		<div className={cn(className, styles.item)}>
+			<img src={message.text} />
 			<p>
 				{message?.createAt ? millisecToDate(message.createAt.seconds) : <br />}
 			</p>

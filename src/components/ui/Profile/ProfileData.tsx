@@ -4,6 +4,9 @@ import { BiSolidEditAlt } from 'react-icons/bi'
 import { UserMain } from '../../../model/User/UserMain'
 import { updateData } from '../../../store/api/firebase/firebase.endpoints'
 
+import { STORAGE_PATH } from '../../../config/storage.config'
+import { uploadImage } from '../../../utils/data/uploadImage'
+import { LoadingItem } from '../Loading/LoadingItem'
 import styles from './Profile.module.scss'
 
 type EditableData = {
@@ -37,12 +40,12 @@ export const ProfileData: FC<{ user: UserMain; editable?: boolean }> = ({
 			{editable ? (
 				<EditableImage user={user} />
 			) : (
-				<div className={cn(styles.img, 'item-black')}>
+				<div className={cn(styles.img, 'item-1')}>
 					<img src={user.img} alt={user.name} />
 				</div>
 			)}
 
-			<div className={cn(styles.info, 'item-black')}>
+			<div className={cn(styles.info, 'item-1')}>
 				<table>
 					<tbody>
 						<tr>
@@ -134,7 +137,7 @@ const EditableField: FC<IEditableFieldProps> = ({
 			{editableData[fieldname].edit ? (
 				<div className={styles.editable}>
 					<input
-						className='input-black'
+						className='input-1'
 						type='text'
 						name={fieldname}
 						value={editableData[fieldname].value}
@@ -146,10 +149,7 @@ const EditableField: FC<IEditableFieldProps> = ({
 						}
 						onBlur={() => handleChange(fieldname)}
 					/>
-					<button
-						className='button-black'
-						onClick={() => handleChange(fieldname)}
-					>
+					<button className='button-1' onClick={() => handleChange(fieldname)}>
 						save
 					</button>
 				</div>
@@ -170,22 +170,34 @@ interface IEditableImageProps {
 }
 
 export const EditableImage: FC<IEditableImageProps> = ({ user }) => {
-	const [edit, setEdit] = useState<boolean>(false)
+	const [image, setImage] = useState<string>(user.img)
+	const [loading, setLoading] = useState<boolean>(false)
+
+	const handleFileUpload = async (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		if (!event.target.files) return
+		setLoading(true)
+		const file = event.target.files[0]
+		const imageUrl = await uploadImage(file, STORAGE_PATH.USERS)
+		setImage(imageUrl)
+		updateData('users', user.id, {
+			img: imageUrl,
+		})
+		setLoading(false)
+	}
 
 	return (
-		<div
-			className={cn(styles.img, 'item-black')}
-		>
-			{edit ? (
-				<div className={styles.imgEditIcon}>
-					<BiSolidEditAlt />
+		<div className={cn(styles.img, 'item-1')}>
+			<div className={styles.imgEditIcon}>
+				<div className='file-input-wrapper'>
+					<input type='file' id='profile-image' onChange={handleFileUpload} />
+					<label htmlFor='profile-image'>
+						<BiSolidEditAlt />
+					</label>
 				</div>
-			) : (
-				<div className={styles.imgEditIcon} onClick={() => setEdit(true)}>
-					<BiSolidEditAlt />
-				</div>
-			)}
-			<img src={user.img} alt={user.name} />
+			</div>
+			{loading ? <LoadingItem /> : <img src={image} alt={user.name} />}
 		</div>
 	)
 }

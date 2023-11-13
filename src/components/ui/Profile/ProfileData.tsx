@@ -5,7 +5,7 @@ import { UserMain } from '../../../model/User/UserMain'
 import { updateData } from '../../../store/api/firebase/firebase.endpoints'
 
 import { STORAGE_PATH } from '../../../config/storage.config'
-import { uploadImage } from '../../../utils/data/uploadImage'
+import { uploadStorage } from '../../../utils/data/uploadStorage'
 import { LoadingItem } from '../Loading/LoadingItem'
 import styles from './Profile.module.scss'
 
@@ -179,7 +179,13 @@ export const EditableImage: FC<IEditableImageProps> = ({ user }) => {
 		if (!event.target.files) return
 		setLoading(true)
 		const file = event.target.files[0]
-		const imageUrl = await uploadImage(file, STORAGE_PATH.USERS)
+
+		if (!file.type.startsWith('image/')) {
+			alert('Выберите изображение')
+			return
+		}
+
+		const imageUrl = await uploadStorage(file, STORAGE_PATH.USERS)
 		setImage(imageUrl)
 		updateData('users', user.id, {
 			img: imageUrl,

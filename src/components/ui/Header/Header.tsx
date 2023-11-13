@@ -28,7 +28,7 @@ export const Header: FC<IHeaderProps> = ({ className, style, logo, menu }) => {
 			<div className={cn(styles.top, 'navbar')}>
 				<div className={styles.logo}>{logo}</div>
 				<div className={styles.burgerBtn} onClick={() => setOpen(!isOpen)}>
-					<Hamburger />
+					<Hamburger toggled={isOpen}/>
 					{count > 0 && <div className='item-red-round'>{count}</div>}
 				</div>
 			</div>

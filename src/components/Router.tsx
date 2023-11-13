@@ -5,6 +5,7 @@ import { DialogPage } from './screens/Dialog/Dialog'
 import { MessagesPage } from './screens/MessagesPage/MessagesPage'
 import { ProfilePage } from './screens/Profile/ProfilePage'
 import { Search } from './screens/Search/Search'
+import { Settings } from './screens/Settings/Settings'
 
 export const Router = () => (
 	<Routes>
@@ -14,5 +15,6 @@ export const Router = () => (
 		<Route path={ROUTING.PROFILE + ':id'} element={<ProfilePage />} />
 		<Route path={ROUTING.DIALOG + ':id'} element={<DialogPage />} />
 		<Route path={ROUTING.PROFILE} element={<Account />} />
+		<Route path={ROUTING.SETTINGS} element={<Settings />} />
 	</Routes>
 )

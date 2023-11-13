@@ -62,9 +62,8 @@
   width: 300px;
   height: 100px;
   padding: 10px;
-  animation: received 5s forwards linear;
   overflow: hidden;
-
+  animation: forwards linear 5s received;
   img{
     width: 50px;
     height: 50px;

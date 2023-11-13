@@ -1,6 +1,9 @@
 .theme-white {
   background: white;
 
+  .login-page{
+    background: white;
+  }
   * {
     color: black !important;
   }
@@ -39,7 +42,7 @@
 
   .textarea-1 {
     border: 1px solid rgb(71, 71, 71);
-    background: rgb(208, 208, 208);
+    background: rgb(255, 255, 255);
   }
 
   .item-2 {

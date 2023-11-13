@@ -21,6 +21,7 @@
   padding-bottom: 40px;
   padding-top: 100px;
   display: flex;
+
   flex-direction: column;
   height: 100%;
   gap: 10px;
@@ -29,7 +30,9 @@
 .item {
   padding: 20px;
   width: 70%;
-
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
   p {
     &:nth-child(2) {
       font-size: 12px;
@@ -62,17 +65,44 @@
   }
 
   img {
-    width: 100%;
+    max-height: 100%;
     max-width: 100%;
-    margin-bottom: 20px;
+  }
+  video{
+    max-height: 100%;
+    max-width: 100%;
+  }
+  audio{
+    width: 100%
+  }
+  a{
+    width: 100%;
+    display: flex;
+    color: rgb(48, 119, 251);
+    transition: all .2s;
+    align-items: center;
+    gap: 10px;
+    svg{
+    transition: all .2s;
+      fill: rgb(48, 119, 251) !important;
+      height: 50px;
+      width: 50px;
+    }
+    &:hover{
+      svg{
+        fill: white !important;
+      }
+      color: white
+    }
   }
 }
 
 .userItem {
   margin-left: auto;
-
+  
   p {
     &:nth-child(2) {
+      margin-top: 20px;
       text-align: right;
     }
   }

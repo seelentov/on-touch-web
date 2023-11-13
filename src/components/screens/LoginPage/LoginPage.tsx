@@ -16,7 +16,7 @@ export const LoginPage: FC<ILoginPageProps> = ({ className, style }) => {
 	const [page, setPage] = useState<Pages>('register')
 
 	return (
-		<div className={cn(className, styles.page)} style={style}>
+		<div className={cn(className, styles.page, 'login-page')} style={style}>
 			<Logo />
 
 			{page === 'login' ? <LoginForm /> : <SignUpForm />}

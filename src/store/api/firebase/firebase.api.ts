@@ -3,12 +3,12 @@ import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyCB-bAiet9EvDsHqXoT9JMXAyaU5P6g2dM',
-	authDomain: 'intouch-1fbfc.firebaseapp.com',
-	projectId: 'intouch-1fbfc',
-	storageBucket: 'intouch-1fbfc.appspot.com',
-	messagingSenderId: '565680801038',
-	appId: '1:565680801038:web:d553fe66580116f474035f',
+  apiKey: "AIzaSyD-xBJ7T3Q1SUIBifFcRfthXndsE077Mpg",
+  authDomain: "intouch-6a1e4.firebaseapp.com",
+  projectId: "intouch-6a1e4",
+  storageBucket: "intouch-6a1e4.appspot.com",
+  messagingSenderId: "339629713786",
+  appId: "1:339629713786:web:301bd42219b4ad3cc44ec3"
 }
 
 export const app = initializeApp(firebaseConfig)

@@ -16,13 +16,13 @@ import {
 	useRef,
 	useState,
 } from 'react'
-import { BiImageAlt, BiSmile } from 'react-icons/bi'
+import { BiCloudDownload, BiImageAlt, BiSmile } from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
 import { STORAGE_PATH } from '../../../config/storage.config'
 import { EMOJI } from '../../../consts/EMOJIES'
 import { useStoreBy } from '../../../hooks/useStoreBy'
 import { Dialog } from '../../../model/Messages/Dialog'
-import { Message } from '../../../model/Messages/Message'
+import { Message, NewMessage } from '../../../model/Messages/Message'
 import { UserMain } from '../../../model/User/UserMain'
 import { db } from '../../../store/api/firebase/firebase.api'
 import {
@@ -31,8 +31,9 @@ import {
 	updateData,
 } from '../../../store/api/firebase/firebase.endpoints'
 import { generateId } from '../../../utils/data/generateId'
-import { uploadImage } from '../../../utils/data/uploadImage'
+import { uploadStorage } from '../../../utils/data/uploadStorage'
 import { millisecToDate } from '../../../utils/date/millisecToDate'
+import { LoadingContext } from '../../providers/LoadingProvider'
 import { MenuContext } from '../../providers/MenuProvider'
 import { LoadingBlock } from '../../ui/Loading/LoadingBlock'
 import { UserItem } from '../../ui/UsersList/UserItem'
@@ -122,7 +123,7 @@ const DialogCompanion: FC<{ companionId?: string }> = ({ companionId }) => {
 const DialogSendInput: FC<{ dialogId?: string }> = ({ dialogId }) => {
 	const { isOpen } = useContext(MenuContext)
 	const { id: user } = useStoreBy('user')
-
+	const { setGlobalLoading } = useContext(LoadingContext)
 	const [input, setInput] = useState<string>('')
 	const [isEmojiOpen, setEmojiOpen] = useState<boolean>(false)
 
@@ -161,29 +162,34 @@ const DialogSendInput: FC<{ dialogId?: string }> = ({ dialogId }) => {
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
 		if (!event.target.files) return
+		await setGlobalLoading(true)
 		const file = event.target.files[0]
-		const imageUrl = await uploadImage(file, STORAGE_PATH.MESSAGES)
+		const url = await uploadStorage(file, STORAGE_PATH.MESSAGES + file.type)
 
 		if (!dialogId) return
 
 		const messageId = generateId()
 
-		const message: Message = new Message({
+		const message: NewMessage = new Message({
 			id: messageId,
 			dialogId: dialogId,
-			text: imageUrl,
+			text: url,
 			createAt: serverTimestamp(),
 			user: user,
-			type: 'img',
+			type: file.type,
+			filename: file.name,
 		})
 
-		await addToData('messages', messageId, message)
+		await addToData('messages', messageId, message).then(() =>
+			setGlobalLoading(false)
+		)
 		await updateData('dialog', dialogId, {
 			lastSenler: user,
 			lastUpd: serverTimestamp(),
-			lastMessage: 'Изображение',
+			lastMessage: file.type,
 			new: increment(1),
 		})
+		await setGlobalLoading(false)
 	}
 
 	return (
@@ -267,33 +273,17 @@ export const DialogList: FC<{ messages: Message[] }> = ({ messages }) => {
 	return (
 		<div className={styles.list} ref={listRef}>
 			{messages ? (
-				messages.map((message: Message, key: number) => {
-					if (message.type === 'img') {
-						return (
-							<DialogItemImg
-								key={key}
-								message={message}
-								className={
-									message.user === id
-										? cn(styles.userItem, 'item-1')
-										: cn(styles.compItem, 'item-2')
-								}
-							/>
-						)
-					}
-
-					return (
-						<DialogItem
-							key={key}
-							message={message}
-							className={
-								message.user === id
-									? cn(styles.userItem, 'item-1')
-									: cn(styles.compItem, 'item-2')
-							}
-						/>
-					)
-				})
+				messages.map((message: Message, key: number) => (
+					<DialogItem
+						key={key}
+						message={message}
+						className={
+							message.user === id
+								? cn(styles.userItem, 'item-1')
+								: cn(styles.compItem, 'item-2')
+						}
+					/>
+				))
 			) : (
 				<p style={{ textAlign: 'center' }}>Сообщений пока нет!</p>
 			)}
@@ -309,18 +299,22 @@ interface IDialogItemProps {
 const DialogItem: FC<IDialogItemProps> = ({ message, className }) => {
 	return (
 		<div className={cn(className, styles.item)}>
-			<p>{message.text}</p>
-			<p>
-				{message?.createAt ? millisecToDate(message.createAt.seconds) : <br />}
-			</p>
-		</div>
-	)
-}
-
-const DialogItemImg: FC<IDialogItemProps> = ({ message, className }) => {
-	return (
-		<div className={cn(className, styles.item)}>
-			<img src={message.text} />
+			{message.type.startsWith('image/') ? (
+				<img src={message.text} />
+			) : message.type === 'text' ? (
+				<p>{message.text}</p>
+			) : message.type.startsWith('video/') ? (
+				<video controls>
+					<source src={message.text} type='video/mp4' />
+				</video>
+			) : message.type.startsWith('audio/') ? (
+				<audio controls src={message.text}></audio>
+			) : (
+				<a href={message.text} target='_blank'>
+					<BiCloudDownload />
+					{message.filename}
+				</a>
+			)}
 			<p>
 				{message?.createAt ? millisecToDate(message.createAt.seconds) : <br />}
 			</p>

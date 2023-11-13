@@ -1,27 +1,32 @@
-# React + TypeScript + Vite
+# Мессенджер - приложение для обмена сообщениями и файлами
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Мессенджер](https://example.com/messenger.png)
 
-Currently, two official plugins are available:
+Мессенджер - это универсальное приложение, разработанное для обмена сообщениями и файлами между пользователями. Оно предоставляет все необходимые функции для коммуникации и обеспечивает удобный интерфейс как для персональных компьютеров, так и для планшетов и мобильных устройств.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Основные функции
 
-## Expanding the ESLint configuration
+- Отправка текстовых сообщений: Пользователи могут отправлять текстовые сообщения. Сообщения доставляются мгновенно и отображаются в реальном времени.
+- Обмен файлами: Приложение позволяет пользователям обмениваться файлами различных форматов. Это может быть фотография, документ, видео или любой другой файл.
+- Адаптация под разные устройства: Мессенджер с учетом различных типов устройств, чтобы пользователи могли пользоваться им на своих персональных компьютерах, планшетах или мобильных телефонах. Интерфейс приложения оптимизирован под каждое устройство, чтобы обеспечить максимальный комфорт использования.
+- Удобный и интуитивно понятный интерфейс. Все основные функции доступны в нескольких кликах, что позволяет быстро и удобно общаться с друзьями и коллегами.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Технические детали
 
-- Configure the top-level `parserOptions` property like this:
+- Разработано на языке программирования Typescript.
+- Используемые технологии: React ( + router, context, icons, switch, hamburger), Redux(toolkit), Sass(+ modules), Firebase (authentication, stogare, firestore).
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+Мы приложили много усилий для создания удобного и надежного мессенджера, который удовлетворит все ваши потребности в общении. Мы надеемся, что вы оцените наше приложение и найдете его полезным.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Установка
+
+1. Склонируйте репозиторий на свое устройство.
+2. Установите необходимые зависимости с помощью команды npm install.
+3. Запустите приложение с помощью команды npm start.
+4. Откройте приложение в браузере по адресу [localhost:5173](http://localhost:5173).
+
+## В планах
+
+1. Реализация мобильного приложения (React Native)
+2. Реализация десктопноого приложения (Electron)
+3. Реализация собственного backend (Next.js), уходя от Firebase
